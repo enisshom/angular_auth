@@ -1,0 +1,127 @@
+<section class="content">
+  <div class="container-fluid">
+    <div class="block-header" *ngFor="let breadscrum of breadscrums">
+      <!-- breadcrumb -->
+      <app-breadcrumb [planning]="breadscrum.planning" [items]="breadscrum.items" [active_item]="breadscrum.active">
+      </app-breadcrumb>
+    </div>
+    <div class="card">
+      <div class="header">
+        <h2> <strong>Filter </strong> </h2>
+        <div class="row m-t-15">
+          <div class="col-md-5">
+            <form [formGroup]="rangeForm">
+              <mat-form-field appearance="outline">
+                <mat-label>Interval de date
+                </mat-label>
+                <mat-date-range-input [rangePicker]="dateRangePicker" >
+                  <input formControlName="dateRangeStart" [min]="todayDate" readonly matInput matStartDate placeholder="Interval de date " #dateStart />
+                  <input formControlName="dateRangeEnd" readonly matInput matEndDate placeholder="End date" (dateChange)="dateRangeChange(dateStart, dateEnd)" #dateEnd />
+                </mat-date-range-input>
+                <mat-datepicker-toggle matPrefix [for]="dateRangePicker">
+                </mat-datepicker-toggle>
+                <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
+              </mat-form-field>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="body">
+        <div class="alert alert-danger" style="margin: 15px 0px; padding: 18px; border-radius: 10px;" *ngIf="errorObj.isError && !loadingPlanning">
+          <b>Error loading planning: </b> {{ errorObj.message }}
+        </div>
+        <div class="d-flex justify-content-center" *ngIf="loadingPlanning">
+          loading ...
+        </div>
+        <div class="d-flex justify-content-center" *ngIf="isFullFeedPlanning && isNoData">
+          Planning is empty
+        </div>
+        <div *ngIf="isFullFeedPlanning && !isNoData" class="responsive_table">
+          <div>
+            <mat-table #table [dataSource]="dataSource" class="mat-cell" matSort>
+              <ng-container matColumnDef="dat">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{planning.dat}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="libdat">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Jour
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> </mat-cell>
+              </ng-container>
+              <!-- <ng-container matColumnDef="typch">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Type CH
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{planning.typch}} </mat-cell>
+              </ng-container> -->
+              <ng-container matColumnDef="libch">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Type chambre
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{ planning.libch }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="cap">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Cap
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{planning.cap}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="resha">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Resa HA
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{ planning.resha }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="surall">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> All
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{planning.surall}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="allo">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Allo
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{ planning.allo }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="occup">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Occup
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{ planning.occup }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="listatt">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>listatt
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{ planning.listatt }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="disp">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Disp
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{ planning.disp }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="pouroccup">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Occup %
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{ planning.pouroccup }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="pourglob">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Global %
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{ planning.pourglob }} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="totpaxres">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>totpaxres
+                </mat-header-cell>
+                <mat-cell *matCellDef="let planning"> {{ planning.totpaxres }} </mat-cell>
+              </ng-container>
+
+              <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="8">No data matching the filter : "{{input.value}}"</td>
+              </tr>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let planning; columns: displayedColumns;" [style.cursor]="'pointer'" matRipple>
+
+              </mat-row>
+            </mat-table>
+            <mat-paginator [pageSizeOptions]="pagination.pageSizeOptions" aria-label="Select page of planning"></mat-paginator>
+
+          </div>
+        </div>
+      </div>
+    </div>

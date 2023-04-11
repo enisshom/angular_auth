@@ -1,0 +1,15 @@
+.mat-column-cap, .mat-column-resha , .mat-column-surall , .mat-column-allo , .mat-column-occup , .mat-column-listatt
+, .mat-column-disp , .mat-column-pouroccup , .mat-column-pourglob , .mat-column-totpaxres
+{
+  justify-content: flex-end;
+}
+
+.mat-column-libch {
+  flex: 1 0 10%;
+  word-wrap:break-word;
+}
+
+
+.total{
+  background: #4263a9; /* green */
+}
