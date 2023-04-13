@@ -35,7 +35,7 @@ constructor(
 
 ngOnInit() {
 
-  this.checkSSO()
+ 
 
   localStorage.removeItem("e")
   localStorage.removeItem("date_now");
@@ -57,7 +57,7 @@ loading: Boolean = false
 onSubmit() {
   this.submitted = true;
   this.error = '';
-  let redirection_url : string = "/choose-properties";
+  let redirection_url : string = "/";
   let loggedUser : any ;
 
   if (this.loginForm.invalid) {
@@ -105,15 +105,4 @@ onSubmit() {
   }
 }
 
-checkSSO(){
-  this.activatedRoute.queryParams.subscribe((params: any) => {
-    if(params.token){
-      let res = JSON.parse(Buffer.from(params.token, 'base64').toString('binary'))
-      this.loginService.saveToken(res);
-      this.loginService.getData(this.loginService.getAccessToken())
-
-      this.router.navigate(['/choose-properties']);
-    }
-  });
-}
 }

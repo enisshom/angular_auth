@@ -103,30 +103,18 @@ export class LoginService {
 
     //Get Payload from Token.
     const payload = this.getPayload(token);
-
+console.log(payload)
     //Get data from Payload.
     const data = JSON.parse(atob(payload));
 
-    let propertyId = parseInt(localStorage.getItem("property"))
+    console.log(data.sub);
 
     //Convert from data to DataToken(is a class).
-    dataToken.propertyIds = data.propertyIds;
-    dataToken.username = data.username;
-    dataToken.userId = data.userId;
+    
+    
     dataToken.email = data.sub;
     dataToken.date_exp = data.exp;
-    dataToken.service = data.service;
-    dataToken.properties = data.properties.filter(property => property.id == propertyId)
-    dataToken.properties.map((property:Property) => {
-      property.roles.map((role:Role) =>{
-        dataToken.roles.push(role)
-        for (let i = 0; i < role.permissions.length; i++) {
-          if (!dataToken.permissions.includes(role.permissions[i])) {
-            dataToken.permissions.push(role.permissions[i].toString())
-          }
-        }
-      })
-    })
+    
     // console.log("Properties "+dataToken.properties[0]);
     // console.log("Roles :"+dataToken.roles[0]);
     // console.log("Permissions "+dataToken.permissions.toString());
