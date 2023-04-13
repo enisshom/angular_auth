@@ -4,10 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-
+import { Buffer } from 'buffer';
 const ACCESS_TOKEN: string = "token_access";
 const REFRESH_TOKEN: string = "token_refresh";
 const URL: string = "http://localhost:8083/auth";
+
 
 @Injectable({
   providedIn: 'root'
@@ -42,9 +43,9 @@ export class LoginService {
 
   
 
-  changePassword(token: string, changePassword:any): Observable<any>{
+  /*changePassword(token: string, changePassword:any): Observable<any>{
     return this.http.put<any>(`${URL}/api/v1/config/verify/change-password?token=${token}`, changePassword);
-  }
+  }*/
 
 
   login(email: string, password: string) {
@@ -63,8 +64,8 @@ export class LoginService {
 
  
   saveToken(data: any): void{
-    localStorage.setItem(ACCESS_TOKEN, data.token_access);
-    localStorage.setItem(REFRESH_TOKEN, data.token_refresh);
+    localStorage.setItem(ACCESS_TOKEN, data.access_token);
+    localStorage.setItem(REFRESH_TOKEN, data.refresh_token);
   }
 
 
@@ -100,17 +101,26 @@ export class LoginService {
       roles: [],
       date_exp:null
     }
-
     //Get Payload from Token.
-    const payload = this.getPayload(token);
-console.log(payload)
-    //Get data from Payload.
-    const data = JSON.parse(atob(payload));
+    const token1 =
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbzFAZ21haWwuY29tIiwiaWF0IjoxNjgxMzgzNDg4LCJleHAiOjE2ODEzODQwODh9.npUmxYi3oHACcLveWWVsrYY0GHapQYcR98nhuGLZb94';
 
-    console.log(data.sub);
+
+
+    const payload = this.getPayload(token);
+    console.log((payload))
+
+    //Get data from Payload.
+    
+    
+    //console.log(data);
 
     //Convert from data to DataToken(is a class).
     
+
+const buffer = Buffer.from(payload, 'base64');
+const data = JSON.parse(buffer.toString('utf-8'));
+console.log(data); // Outputs: "Hello World"
     
     dataToken.email = data.sub;
     dataToken.date_exp = data.exp;
@@ -141,7 +151,7 @@ console.log(payload)
 
   //Refresh TokenAccess
   async refreshToken(token: string): Promise<Object>{
-    return await this.http.get(`${URL}/api/v1/config/refreshToken?token=${token}`).toPromise();
+    return await this.http.get(`${URL}/refresh-token`).toPromise();
   }
 
 

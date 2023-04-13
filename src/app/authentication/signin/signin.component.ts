@@ -57,7 +57,7 @@ loading: Boolean = false
 onSubmit() {
   this.submitted = true;
   this.error = '';
-  let redirection_url : string = "/";
+  let redirection_url : string = "/dashboard/main";
   let loggedUser : any ;
 
   if (this.loginForm.invalid) {
@@ -71,6 +71,7 @@ onSubmit() {
         this.loading = false;
         localStorage.removeItem("e")
         localStorage.removeItem("date_now");
+        
         if (res) {
           //save token in local storage
           if (res.isMfaEnabled) {
@@ -84,11 +85,9 @@ onSubmit() {
 
           this.loginService.saveToken(res);
           let user: DataToken = this.loginService.getData(this.loginService.getAccessToken());
-          localStorage.setItem("date_format", res.dateFormat);
+          localStorage.setItem("date_format", res.iat);
          
-          if(!loggedUser.changed_password ){
-            // redirection_url='/change-password';
-          }
+          
           this.router.navigate([redirection_url]);
         } else {
           this.error = 'Invalid Login';
@@ -98,10 +97,12 @@ onSubmit() {
         this.loading = false;
         this.loginService.logout();
         this.f.password.setValue('');
-        // this.error = error
+        this.error = 'Username and Password not valid !';
         this.submitted = false;
       }
     });
+
+
   }
 }
 
