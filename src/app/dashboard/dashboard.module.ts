@@ -19,6 +19,7 @@ import { SharedModule } from './../shared/shared.module';
 import { MAT_DATE_LOCALE } from '@angular/material/core'
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [MainComponent, Dashboard2Component, Dashboard3Component,PlanningComponent],
@@ -30,6 +31,7 @@ import { MatTableModule } from '@angular/material/table';
     NgxSpinnerModule,
     MatTableModule,
     MatIconModule,
+    MatSelectModule,
     MatButtonModule,
     NgScrollbarModule,
     NgApexchartsModule,

@@ -5,16 +5,18 @@ import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from './material.module';
 import { FeatherIconsModule } from './components/feather-icons/feather-icons.module';
+import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [CommonModule,NgxSpinnerModule, FormsModule, ReactiveFormsModule, RouterModule],
   exports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
     MaterialModule,
-    FeatherIconsModule
+    FeatherIconsModule,
+    NgxSpinnerModule,
   ]
 })
 export class SharedModule {}

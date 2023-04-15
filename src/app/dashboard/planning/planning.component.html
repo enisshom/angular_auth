@@ -7,24 +7,38 @@
     </div>
     <div class="card">
       <div class="header">
-        <h2> <strong>Filter </strong> </h2>
-        <div class="row m-t-15">
-          <div class="col-md-5">
-            <form [formGroup]="rangeForm">
+        <form [formGroup]="rangeForm">
+          <h2> <strong>Filter </strong> </h2>
+          <div class="row m-t-15">
+            <div class="col-md-5">
+              <mat-form-field appearance="outline" class="example-full-width">
+
+                <mat-label> Select Hotel</mat-label>
+                <mat-select formControlName="serverIp" (selectionChange)="selectHotel($event)" value="mogadorServerIPs[0].ip">
+                  <!-- <mat-option value="0">  <b>-------- None -------</b></mat-option> -->
+                  <mat-option *ngFor="let server of mogadorServers" [value]="server.ip">
+                    <mat-icon>router</mat-icon>{{server.hotel_name}}
+                  </mat-option>
+
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-md-5">
+
               <mat-form-field appearance="outline">
                 <mat-label>Interval de date
                 </mat-label>
-                <mat-date-range-input [rangePicker]="dateRangePicker" >
-                  <input formControlName="dateRangeStart" [min]="todayDate" readonly matInput matStartDate placeholder="Interval de date " #dateStart />
+                <mat-date-range-input [rangePicker]="dateRangePicker">
+                  <input formControlName="dateRangeStart" readonly matInput matStartDate placeholder="Interval de date " #dateStart />
                   <input formControlName="dateRangeEnd" readonly matInput matEndDate placeholder="End date" (dateChange)="dateRangeChange(dateStart, dateEnd)" #dateEnd />
                 </mat-date-range-input>
                 <mat-datepicker-toggle matPrefix [for]="dateRangePicker">
                 </mat-datepicker-toggle>
                 <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
               </mat-form-field>
-            </form>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
     </div>
     <div class="card">
@@ -32,8 +46,11 @@
         <div class="alert alert-danger" style="margin: 15px 0px; padding: 18px; border-radius: 10px;" *ngIf="errorObj.isError && !loadingPlanning">
           <b>Error loading planning: </b> {{ errorObj.message }}
         </div>
-        <div class="d-flex justify-content-center" *ngIf="loadingPlanning">
-          loading ...
+        <div *ngIf="loadingPlanning" class="row p-3 loading">
+          <p class="loading">
+            <mat-spinner [diameter]="30"></mat-spinner>
+            <span>loooooooding</span>
+          </p>
         </div>
         <div class="d-flex justify-content-center" *ngIf="isFullFeedPlanning && isNoData">
           Planning is empty
@@ -45,11 +62,11 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Date</mat-header-cell>
                 <mat-cell *matCellDef="let planning"> {{planning.dat}} </mat-cell>
               </ng-container>
-              <ng-container matColumnDef="libdat">
+              <!-- <ng-container matColumnDef="libdat">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Jour
                 </mat-header-cell>
                 <mat-cell *matCellDef="let planning"> </mat-cell>
-              </ng-container>
+              </ng-container> -->
               <!-- <ng-container matColumnDef="typch">
                 <mat-header-cell *matHeaderCellDef mat-sort-header> Type CH
                 </mat-header-cell>
@@ -115,7 +132,7 @@
                 <td class="mat-cell" colspan="8">No data matching the filter : "{{input.value}}"</td>
               </tr>
               <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let planning; columns: displayedColumns;" [style.cursor]="'pointer'" matRipple>
+              <mat-row [ngClass]="{ 'total': planning.libdat == '' }" *matRowDef="let planning; columns: displayedColumns;" matRipple>
 
               </mat-row>
             </mat-table>

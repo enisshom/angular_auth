@@ -16,30 +16,30 @@ export const ROUTES: RouteInfo[] = [
     class: 'menu-toggle',
     groupTitle: false,
     submenu: [
-      // {
-      //   path: 'dashboard/main',
-      //   title: 'MENUITEMS.HOME.LIST.DASHBOARD1',
-      //   icon: '',
-      //   class: 'ml-menu',
-      //   groupTitle: false,
-      //   submenu: []
-      // },
-      // {
-      //   path: 'dashboard/dashboard2',
-      //   title: 'MENUITEMS.HOME.LIST.DASHBOARD2',
-      //   icon: '',
-      //   class: 'ml-menu',
-      //   groupTitle: false,
-      //   submenu: []
-      // },
-      // {
-      //   path: 'dashboard/dashboard3',
-      //   title: 'MENUITEMS.HOME.LIST.DASHBOARD3',
-      //   icon: '',
-      //   class: 'ml-menu',
-      //   groupTitle: false,
-      //   submenu: []
-      // },
+      {
+        path: 'dashboard/main',
+        title: 'MENUITEMS.HOME.LIST.DASHBOARD1',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: []
+      },
+      {
+        path: 'dashboard/dashboard2',
+        title: 'MENUITEMS.HOME.LIST.DASHBOARD2',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: []
+      },
+      {
+        path: 'dashboard/dashboard3',
+        title: 'MENUITEMS.HOME.LIST.DASHBOARD3',
+        icon: '',
+        class: 'ml-menu',
+        groupTitle: false,
+        submenu: []
+      },
       {
         path: 'dashboard/planning',
         title: 'Planning',

@@ -9,13 +9,11 @@ export class ClientService {
 
   constructor(private httpClient: HttpClient) { }
 
-  private url="http://192.168.2.222:8000/api";
+  private url="http://localhost/api";
   public getAllClients(){
     return this.httpClient.get<any[]>(this.url +"/planning")
   }
-  public getPlanning(dateStart:Date,dateEnd:Date){
-    return this.httpClient.post<any[]>(this.url +"/planning",{dateStart,dateEnd}).pipe(catchError(this.handleError))
-  }
+
   public createClient(client) {
     return this.httpClient.post<Client>(this.url ,client);
   }
