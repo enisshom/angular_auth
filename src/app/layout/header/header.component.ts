@@ -15,6 +15,7 @@ import { RightSidebarService } from 'src/app/core/service/rightsidebar.service';
 import { WINDOW } from 'src/app/core/service/window.service';
 import { LanguageService } from 'src/app/core/service/language.service';
 import { UnsubscribeOnDestroyAdapter } from 'src/app/shared/UnsubscribeOnDestroyAdapter';
+import { LoginService } from 'src/app/core/service/login.service';
 const document: any = window.document;
 
 @Component({
@@ -42,6 +43,7 @@ export class HeaderComponent
     private rightSidebarService: RightSidebarService,
     private configService: ConfigService,
     private authService: AuthService,
+    private loginService: LoginService,
     private router: Router,
     public languageService: LanguageService
   ) {
@@ -231,7 +233,7 @@ export class HeaderComponent
     }
   }
   logout() {
-    this.subs.sink = this.authService.logout().subscribe((res) => {
+    this.subs.sink = this.loginService.logout().subscribe((res) => {
       if (!res.success) {
         this.router.navigate(['/authentication/signin']);
       }
