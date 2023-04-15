@@ -51,6 +51,9 @@ export class LoginService {
   login(email: string, password: string) {
     return this.http.post<any>(`${URL}/login`, {email,password});
   }
+  registre(lastname:string,email: string, password: string){
+    return this.http.post<any>(`${URL}/registre`, {lastname,email,password});
+  }
 
   
   logout() {
@@ -102,10 +105,7 @@ export class LoginService {
       date_exp:null
     }
     //Get Payload from Token.
-    const token1 =
-  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJpbzFAZ21haWwuY29tIiwiaWF0IjoxNjgxMzgzNDg4LCJleHAiOjE2ODEzODQwODh9.npUmxYi3oHACcLveWWVsrYY0GHapQYcR98nhuGLZb94';
-
-
+ 
 
     const payload = this.getPayload(token);
     console.log((payload))

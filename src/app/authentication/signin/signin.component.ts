@@ -74,13 +74,7 @@ onSubmit() {
         
         if (res) {
           //save token in local storage
-          if (res.isMfaEnabled) {
-            this.router.navigate([res.redirectTo]);
-            localStorage.setItem("e", res.e);
-            localStorage.setItem("date_now", res.dateNow);
-            // this.cookieService.set("email", res.email, 0.09, '/authentication/signin');
-            return;
-          }
+          
 
 
           this.loginService.saveToken(res);
