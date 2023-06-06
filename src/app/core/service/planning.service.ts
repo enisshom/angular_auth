@@ -1,6 +1,14 @@
-import { BehaviorSubject, catchError, first, interval, Observable, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  first,
+  interval,
+  Observable,
+  throwError
+} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +16,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 export class PlanningService {
   // private ip="http://192.168.2.222:8000/api";
   public connected$ = new BehaviorSubject<boolean>(false);
-  private config = 'http://192.168.2.222:8000/api/connected';
+  private config = environment.apiUrl + '/api/connected';
   public connState: boolean;
   private source = interval(3000);
 
@@ -24,7 +32,6 @@ export class PlanningService {
     //       }
     //     }), err => this.connected(false);
     // });
-
     // this.connected$.subscribe(connected => {
     //   console.log("Connected: ", connected);
     // });
@@ -37,10 +44,13 @@ export class PlanningService {
 
   public getPlanning(serverIp: string, dateStart: Date, dateEnd: Date) {
     console.log('from service   ' + serverIp);
-    return this.httpClient .post<any[]>('http://' + serverIp + '/api/planning', { dateStart, dateEnd }) .pipe(catchError(this.handleError));
+    return this.httpClient
+      .post<any[]>('http://' + serverIp + '/api/planning', {
+        dateStart,
+        dateEnd
+      })
+      .pipe(catchError(this.handleError));
   }
-
-
 
   private handleError(err: HttpErrorResponse): Observable<never> {
     return throwError(() => err);
