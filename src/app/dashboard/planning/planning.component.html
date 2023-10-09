@@ -16,7 +16,7 @@
                 <mat-label> Select Hotel</mat-label>
                 <mat-select formControlName="serverIp" (selectionChange)="selectHotel($event)" value="mogadorServerIPs[0].ip">
                   <!-- <mat-option value="0">  <b>-------- None -------</b></mat-option> -->
-                  <mat-option *ngFor="let server of mogadorServers" [value]="server.ip">
+                  <mat-option *ngFor="let server of mogadorServerIPs" [value]="server.ip">
                     <mat-icon>router</mat-icon>{{server.hotel_name}}
                   </mat-option>
 

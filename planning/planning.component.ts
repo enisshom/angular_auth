@@ -7,9 +7,9 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
-import mogadorServerIPs from '../assets/mogadorServerIPs.json';
+import mogadorServerIPs from '/assets/mogadorServerIPs.json';
 import { debounceTime, distinctUntilChanged, map, startWith, tap } from 'rxjs';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 
 export class SubmitObj {
   loading: boolean;
@@ -101,8 +101,7 @@ export class PlanningComponent implements OnInit {
     public planningService: PlanningService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
-
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -173,10 +172,8 @@ export class PlanningComponent implements OnInit {
   }
 
   selectHotel(event: MatSelectChange) {
-   this.serverIp = event.value;
+    this.serverIp = event.value;
     console.log(this.dateEnd);
     this.getPlanning(this.serverIp, this.dateStart, this.dateEnd);
   }
-
-
 }

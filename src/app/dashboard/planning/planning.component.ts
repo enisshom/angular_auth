@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PlanningService } from 'src/app/core/service/planning.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -7,9 +8,9 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
-import mogadorServerIPs from '../assets/mogadorServerIPs.json';
+
 import { debounceTime, distinctUntilChanged, map, startWith, tap } from 'rxjs';
-import {format} from 'date-fns';
+import { format } from 'date-fns';
 
 export class SubmitObj {
   loading: boolean;
@@ -52,7 +53,7 @@ export class PlanningComponent implements OnInit {
     new Date().setMonth(new Date().getMonth() + 2)
   );
   after2Months: string = this.after2MonthsDate.toLocaleDateString();
-  mogadorServers: any = mogadorServerIPs;
+  mogadorServerIPs: any = environment.mogadorServerIPs;
 
   readonly errorObjInit = {
     isError: false,
@@ -101,8 +102,7 @@ export class PlanningComponent implements OnInit {
     public planningService: PlanningService,
     private router: Router,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
-
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -110,11 +110,11 @@ export class PlanningComponent implements OnInit {
     // console.log(this.planningService.connected())
     this.dateStart = format(this.todayDate, 'dd/MM/yyyy');
     this.dateEnd = format(this.after2MonthsDate, 'dd/MM/yyyy');
-    this.serverIp = mogadorServerIPs[0].ip;
+    this.serverIp = this.mogadorServerIPs[0];
     this.searchForm = this.fb.group({
       dateRangeStart: [this.todayDate, [Validators.required]],
       dateRangeEnd: [this.after2MonthsDate, [Validators.required]],
-      serverIp: [mogadorServerIPs[0].ip, [Validators.required]]
+      serverIp: [this.mogadorServerIPs[0].ip, [Validators.required]]
     });
 
     // this.searchForm.valueChanges.pipe(
@@ -133,7 +133,11 @@ export class PlanningComponent implements OnInit {
     //     this.getPlanning( result.serverIp, result.dateRangeStart, result.dateRangeEnd );
     //   });
 
-    this.getPlanning(this.mogadorServers[0].ip, this.today, this.after2Months);
+    this.getPlanning(
+      this.mogadorServerIPs[0].ip,
+      this.today,
+      this.after2Months
+    );
   }
   dateRangeChange(
     dateRangeStart: HTMLInputElement,
@@ -173,10 +177,8 @@ export class PlanningComponent implements OnInit {
   }
 
   selectHotel(event: MatSelectChange) {
-   this.serverIp = event.value;
+    this.serverIp = event.value;
     console.log(this.dateEnd);
     this.getPlanning(this.serverIp, this.dateStart, this.dateEnd);
   }
-
-
 }

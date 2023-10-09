@@ -4,7 +4,25 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:4200'
+  apiUrl: 'http://172.20.0.10:4200',
+  mogadorServerIPs: [
+    {
+      hotel_name: 'Pluriel test',
+      ip: '192.168.2.222:8000'
+    },
+    {
+      hotel_name: 'Mogador Menara',
+      ip: '192.168.2.500:50'
+    },
+    {
+      hotel_name: 'Mogador Kasbah',
+      ip: '192.168.2.63'
+    },
+    {
+      hotel_name: 'Mogador Tanger',
+      ip: '192.168.2.44'
+    }
+  ]
 };
 
 /*

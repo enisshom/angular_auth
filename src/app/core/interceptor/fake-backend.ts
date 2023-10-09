@@ -14,10 +14,10 @@ import { User } from '../models/user';
 const users: User[] = [
   {
     id: 1,
-    username: 'admin@lorax.com',
-    password: 'admin',
-    firstName: 'Sarah',
-    lastName: 'Smith',
+    username: 'admin@mogador.com',
+    password: 'admin@mogador',
+    firstName: 'Pluriel',
+    lastName: 'Admin',
     token: 'admin-token'
   }
 ];
